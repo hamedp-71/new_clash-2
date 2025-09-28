@@ -1,7 +1,6 @@
 #====================================================#
 #     Clash Meta Configuration File (Final Version)    #
-#        Proxies are included exactly as provided.     #
-#        Rule added for check-host.net fix.          #
+#        All Proxies + DNS Fix for WireGuard           #
 #====================================================#
 
 # تنظیمات پایه کلش
@@ -13,7 +12,8 @@ log-level: info
 external-controller: '0.0.0.0:9090'
 secret: ''
 
-# تنظیمات DNS پیشرفته برای ایران
+# >> تنظیمات DNS <<
+# این بخش برای حل مشکل check-host.net با WireGuard اصلاح شده است.
 dns:
   enable: true
   listen: 0.0.0.0:53
@@ -32,9 +32,12 @@ dns:
     geoip-code: IR
     domain:
       - +.ir
+  # این قانون به کلش می‌گوید که برای دامنه مشخص شده، از یک DNS خاص استفاده کند
+  nameserver-policy:
+    'check-host.net': https://dns.google/dns-query
 
 # >> پراکسی‌ها <<
-# تمام پراکسی‌ها بدون هیچ تغییری در نام یا مشخصات اضافه شده‌اند.
+# تمام پراکسی‌ها دقیقاً همانطور که ارائه دادید، اضافه شده‌اند.
 proxies:
   - name: "🇩🇪 anytls-443"
     type: anytls
@@ -721,7 +724,7 @@ proxy-groups:
   - name: "اتصال پایدار"
     type: url-test
     url: http://www.gstatic.com/generate_204
-    interval: 60
+    interval: 60 # تست پینگ هر ۶۰ ثانیه (یک دقیقه)
     tolerance: 50
     proxies:
       - "🇩🇪 anytls-443"
@@ -791,6 +794,4 @@ rules:
   - DOMAIN-KEYWORD,digikala,DIRECT
   - DOMAIN-KEYWORD,snapp,DIRECT
   - DOMAIN-KEYWORD,tapsi,DIRECT
-  # FIX: قانون اضافه شده برای حل مشکل سایت check-host.net
-  - DOMAIN-SUFFIX,check-host.net,PROXY
   - MATCH,PROXY
