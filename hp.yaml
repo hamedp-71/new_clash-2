@@ -1,6 +1,6 @@
 #====================================================#
 #     Clash Meta Configuration File (Final Version)    #
-#           IPv6 Disabled for Maximum Compatibility    #
+#  Internal WG DNS removed & Load-Balance Group added  #
 #====================================================#
 
 # تنظیمات پایه کلش
@@ -12,11 +12,10 @@ log-level: info
 external-controller: '0.0.0.0:9090'
 secret: ''
 
-# <<<--- راه حل جدید و اصلی اینجاست
-# این دستور به طور کامل پشتیبانی از IPv6 را غیرفعال می‌کند تا از تداخل جلوگیری شود.
+# برای حداکثر سازگاری، IPv6 همچنان غیرفعال است
 ipv6: false
 
-# تنظیمات DNS
+# تنظیمات DNS مرکزی کلش
 dns:
   enable: true
   listen: 0.0.0.0:53
@@ -29,17 +28,14 @@ dns:
     - https://1.1.1.1/dns-query
   fallback:
     - https://dns.cloudflare.com/dns-query
-    - tls://8.8.8.8:853
   fallback-filter:
     geoip: true
     geoip-code: IR
     domain:
       - +.ir
-  # این قانون به کلش می‌گوید که برای دامنه مشخص شده، از یک DNS خاص استفاده کند
-  nameserver-policy:
-    'check-host.net': https://dns.google/dns-query
 
 # >> پراکسی‌ها <<
+# نکته مهم: کلید 'dns' از تمام کانفیگ‌های وایرگارد حذف شده است.
 proxies:
   - name: "🇩🇪 anytls-443"
     type: anytls
@@ -57,7 +53,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "Yom91OWyt0otz1S4hgQMhp1q1y8tpDvUWwVkNXpmpjc="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇩🇪 hamedp71-WG 2"
     type: wireguard
@@ -67,7 +62,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "dAAkV3G3YFurH3+3198clav9vlh4FxB1asqNc0tLeCk="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇦🇹 Austria-WG"
     type: wireguard
@@ -78,7 +72,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "KtJIKy9zsCXtKwFMQeGDEZVXtqw+X1+5z10Rh84/N0s="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇦🇺 Australia-WG-1"
     type: wireguard
@@ -89,7 +82,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "jCi1I5HBTtwCblBbMzOFmOOFNG1GilYOZgst0kyq9gY="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇦🇺 Australia-WG-2"
     type: wireguard
@@ -100,7 +92,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "Jhhq6jvPxABM8OmzaM4/zJbcoRBR5OZalIHrZaFuXAU="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇦🇺 Australia-WG-3"
     type: wireguard
@@ -111,7 +102,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "eSxX+L8qX+1MdmwjtlZGIDbDivFdURBh5Rm1KfUpYzc="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇦🇺 Australia-WG-4"
     type: wireguard
@@ -122,7 +112,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "iY4MhQqQTP4uT7U4w9DfUEVxi5I3HJvjZcIL2dwmtTw="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇦🇺 Australia-WG-5"
     type: wireguard
@@ -133,7 +122,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "r5BDU0T+VGZU6I+zuF3vlGrdORtgNvLhY08gQxrFRCw="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇦🇺 Australia-WG"
     type: wireguard
@@ -144,7 +132,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "tEh6Z8bnFmQU2KWHWYOS7yuDFZgwn3LGOZAdR1hN8kU="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇦🇺 Australia-WG-6"
     type: wireguard
@@ -155,7 +142,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "KvFr7Te5+RaFATDKJzrNXKf44ws8J6E9WbNVsMPvY1I="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇧🇦 Bosnia-WG"
     type: wireguard
@@ -166,7 +152,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "6oMHpHHL3pq6Pdr2HoDRYuyjcyQGxfQaSRQR+HPyvgc="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇦 Canada-WG-1"
     type: wireguard
@@ -177,7 +162,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "w262TI0UyIg9pFunMiekVURYUuT/z4qXRor2Z7VcOn4="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇦 Canada-WG-2"
     type: wireguard
@@ -188,7 +172,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "YxWQDjNmU41PJXtoobFek3Y6nhICSLgsqH+QKPO5AQ8="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇦 Canada-WG-3"
     type: wireguard
@@ -199,7 +182,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "vwimooPysZvNdJULeFQVovYfqhsLG5gVdzgoTnfm+iE="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇦 Canada-WG-4"
     type: wireguard
@@ -210,7 +192,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "IMHoX/bhNghQVQB0pYKi14pwJhkOcLevpiMa7Khaz2I="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇭 Switzerland-WG-1"
     type: wireguard
@@ -221,7 +202,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "uFOg97vQhHVCUfZy/HwmGH+dR6/9lpeWZ5tV3PysHRE="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇾 Cyprus-WG"
     type: wireguard
@@ -232,7 +212,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "90fjr1sq0Hgv2l+DgMaaGQ009SDw7VxmzJwaYmclaFs="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇿 Czechia-WG"
     type: wireguard
@@ -243,7 +222,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "dAaOzl6DBAuFWC85UJUY378WwEHUoNqbE5lJMDfNamo="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇨🇿 Czechia-WG-1"
     type: wireguard
@@ -253,7 +231,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "dAaOzl6DBAuFWC85UJUY378WwEHUoNqbE5lJMDfNamo="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇫🇷 France-WG"
     type: wireguard
@@ -264,7 +241,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "3si2nD1DKbbkeZkdg3hLMfOYw1gdKbVFtTOj2NOA+nM="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇫🇷 France-WG-1"
     type: wireguard
@@ -275,7 +251,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "3si2nD1DKbbkeZkdg3hLMfOYw1gdKbVFtTOj2NOA+nM="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇬🇧 United Kingdom-WG"
     type: wireguard
@@ -286,7 +261,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "bGn6yuCFQWWF8+ZMGlJ0M6+IJRlkLXn0/UI/mvIyYwQ="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇭🇰 Hong Kong-WG"
     type: wireguard
@@ -297,7 +271,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "zi62xnrtbvAbaavB8MLoTF36BX/stxjfnGJ6mIsZYzg="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇮🇸 hamedp71-WG"
     type: wireguard
@@ -307,7 +280,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "0CUpqMsVggxsjvdZewCsBFsw84goCitq0G9nytQhpDw="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇮🇸 Iceland-WG"
     type: wireguard
@@ -317,7 +289,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "ua7TUXkcSiiHeTyCok5b3PX9DkJ4l5yVvGlSmJ34WU8="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇮🇸 Iceland-WG-1"
     type: wireguard
@@ -328,7 +299,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "VgzE+XeQUxX54wMZdhRBU4Qxqba95iVpXi197ZbBBgA="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇮🇸 Iceland-WG-2"
     type: wireguard
@@ -339,7 +309,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "ua7TUXkcSiiHeTyCok5b3PX9DkJ4l5yVvGlSmJ34WU8="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇯🇵 Japan-WG"
     type: wireguard
@@ -350,7 +319,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "8n68GM7n6dm6Hj3RIIh5q1q6Un52Cq82LYEXHRAtPg4="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇰🇪 Kenya-WG"
     type: wireguard
@@ -361,7 +329,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "S/qPJPWnfwfb1pWIcKN8FH71j5dFt9eH2KbEeU1+QlE="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇱🇹 Lithuania-WG"
     type: wireguard
@@ -371,7 +338,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "0CUpqMsVggxsjvdZewCsBFsw84goCitq0G9nytQhpDw="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇱🇺 Luxembourg-WG"
     type: wireguard
@@ -382,7 +348,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "BzMLell5uUM/d9aNGaGMog+GFH36s4dFO0WuQ6/VxCg="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇲🇰 North Macedonia-WG"
     type: wireguard
@@ -393,7 +358,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "9J0kA4c4i7N/+6B+3j0zFkDTHocZNsw6eK6+sLZ1qCQ="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇳🇱 Netherlands-WG-1"
     type: wireguard
@@ -404,7 +368,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "yrmgyxaJAxTEth7Gc8lXOQVHn9Gn/fzd4cLE+0WZjFI="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇳🇱 Netherlands-WG-2"
     type: wireguard
@@ -415,7 +378,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "c9QHUQhVUNIYqcp5HQ4gwoSoKzAgK8uSsoiJUrlriDA="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇳🇴 Norway-WG"
     type: wireguard
@@ -426,7 +388,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "y+Kvlfz0z8DF17hVvEezMml3SH3OaB2l5l09DPdQNCk="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇳🇿 New Zealand-WG"
     type: wireguard
@@ -437,7 +398,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "el0He87GLmmywBmn7ErEiuKd5Bjc6Q4zWciL86rYcxw="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇵🇦 Panama-WG"
     type: wireguard
@@ -448,7 +408,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "3L8yhe+v7TzBeesOFxSdU2VUa8FG4PTuoiiUoV7DAGY="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇷🇺 Russia-WG"
     type: wireguard
@@ -458,7 +417,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "gLPWBcPANL0mgwEkImb6PUJmR2ncz7S9DKIDDYvgJkk="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2"]
     mtu: 1280
   - name: "🇷🇺 Russia-WG-1"
     type: wireguard
@@ -469,7 +427,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "gLPWBcPANL0mgwEkImb6PUJmR2ncz7S9DKIDDYvgJkk="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇷🇺 Russia-WG-2"
     type: wireguard
@@ -480,7 +437,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "Yom91OWyt0otz1S4hgQMhp1q1y8tpDvUWwVkNXpmpjc="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇸🇪 Sweden-WG"
     type: wireguard
@@ -491,7 +447,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "P5X43E/SgvnJtbrKnJwLFxqFoZGsCghW2SxlXvfdzm0="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇹🇼 Taiwan"
     type: wireguard
@@ -502,7 +457,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "dAAkV3G3YFurH3+3198clav9vlh4FxB1asqNc0tLeCk="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇸🇬 Singapore"
     type: wireguard
@@ -513,7 +467,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "sv9o+LudivUcZh3f92hEFFu5KGCT/2QISYy3OpPC0h0="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇸🇬 Singapore 1"
     type: wireguard
@@ -524,7 +477,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "tJa6iPx6mpOktn5KoalMslWcpg6pRUdVx3bKDi3wtDg="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 2"
     type: wireguard
@@ -535,7 +487,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "/oz2frQv99JveBgmTXW22QXIEulQURK79BW+ugk8fCE="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 3"
     type: wireguard
@@ -546,7 +497,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "mRksyUF7wDK/8uBoPoEujp+yoUhjhq0N2LnNJFJnmiE="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 4"
     type: wireguard
@@ -557,7 +507,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "oIt9F8IfWqCvSQACrDcmfLPFrhn+RtG+Mr9/sd4VSSU="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 5"
     type: wireguard
@@ -568,7 +517,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "5yBJlSpfxd8Hq4+X4ZD60MYc6tosaMh5inQwA18XCCk="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 6"
     type: wireguard
@@ -579,7 +527,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "z77o+FZ5AcTxTvkNyjLv69ZqaQtzFoS6UdtTK1eyoE8="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 7"
     type: wireguard
@@ -590,7 +537,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "47tLjymDPpTIBerb+wn02/XNFABF4YDAGwOnijSoZmQ="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 8"
     type: wireguard
@@ -601,7 +547,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "fvmyuUJF8JvjzIts5bROwwZQ0zkSB7lk/q8E4G3+F20="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States 9"
     type: wireguard
@@ -612,7 +557,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "1S9LgDyVSo2X34ZG8ukQQ7vqL5RpmXszNe0SYNjiUws="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇺🇸 United States"
     type: wireguard
@@ -623,7 +567,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "b5fIKEXhihCI7f4NOkQO/2BOd+bYHa0c05OylImgB0E="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇻🇳 Vietnam"
     type: wireguard
@@ -634,7 +577,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "SxBT11IISNRou7thGo5A1QtaMjfzPIzZXDxdYEbDxhE="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇿🇦 South Africa 1"
     type: wireguard
@@ -645,7 +587,6 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "stPvzj5yM1z5Qg9H3gMvAKNPJLU0X3SeUSJPg3wqDR8="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
   - name: "🇿🇦 South Africa"
     type: wireguard
@@ -656,14 +597,78 @@ proxies:
     private-key: "cIq+3tcHVT7gRMl4kIv0WE68ERiTmDtA7rhyHhLJ/mg="
     public-key: "Nh5LEJT44xbuvTQnv3OZ0bXi09BFXV4SBB1XVMI12Ec="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
-    dns: ["10.255.255.2", "8.8.8.8"]
     mtu: 1280
 
 # >> گروه‌بندی پراکسی‌ها <<
 proxy-groups:
-  # این گروه اصلی است که در قوانین استفاده می‌شود
   - name: "PROXY"
     type: select
+    proxies:
+      - "⚖️ Load Balance"
+      - "🇩🇪 anytls-443"
+      - "🇩🇪 hamedp71-WG"
+      - "🇩🇪 hamedp71-WG 2"
+      - "🇦🇹 Austria-WG"
+      - "🇦🇺 Australia-WG-1"
+      - "🇦🇺 Australia-WG-2"
+      - "🇦🇺 Australia-WG-3"
+      - "🇦🇺 Australia-WG-4"
+      - "🇦🇺 Australia-WG-5"
+      - "🇦🇺 Australia-WG"
+      - "🇦🇺 Australia-WG-6"
+      - "🇧🇦 Bosnia-WG"
+      - "🇨🇦 Canada-WG-1"
+      - "🇨🇦 Canada-WG-2"
+      - "🇨🇦 Canada-WG-3"
+      - "🇨🇦 Canada-WG-4"
+      - "🇨🇭 Switzerland-WG-1"
+      - "🇨🇾 Cyprus-WG"
+      - "🇨🇿 Czechia-WG"
+      - "🇨🇿 Czechia-WG-1"
+      - "🇫🇷 France-WG"
+      - "🇫🇷 France-WG-1"
+      - "🇬🇧 United Kingdom-WG"
+      - "🇭🇰 Hong Kong-WG"
+      - "🇮🇸 hamedp71-WG"
+      - "🇮🇸 Iceland-WG"
+      - "🇮🇸 Iceland-WG-1"
+      - "🇮🇸 Iceland-WG-2"
+      - "🇯🇵 Japan-WG"
+      - "🇰🇪 Kenya-WG"
+      - "🇱🇹 Lithuania-WG"
+      - "🇱🇺 Luxembourg-WG"
+      - "🇲🇰 North Macedonia-WG"
+      - "🇳🇱 Netherlands-WG-1"
+      - "🇳🇱 Netherlands-WG-2"
+      - "🇳🇴 Norway-WG"
+      - "🇳🇿 New Zealand-WG"
+      - "🇵🇦 Panama-WG"
+      - "🇷🇺 Russia-WG"
+      - "🇷🇺 Russia-WG-1"
+      - "🇷🇺 Russia-WG-2"
+      - "🇸🇪 Sweden-WG"
+      - "🇹🇼 Taiwan"
+      - "🇸🇬 Singapore"
+      - "🇸🇬 Singapore 1"
+      - "🇺🇸 United States 2"
+      - "🇺🇸 United States 3"
+      - "🇺🇸 United States 4"
+      - "🇺🇸 United States 5"
+      - "🇺🇸 United States 6"
+      - "🇺🇸 United States 7"
+      - "🇺🇸 United States 8"
+      - "🇺🇸 United States 9"
+      - "🇺🇸 United States"
+      - "🇻🇳 Vietnam"
+      - "🇿🇦 South Africa 1"
+      - "🇿🇦 South Africa"
+
+  # این گروه ترافیک را بین سرورهای سالم توزیع می‌کند
+  - name: "⚖️ Load Balance"
+    type: load-balance
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    strategy: consistent-hashing
     proxies:
       - "🇩🇪 anytls-443"
       - "🇩🇪 hamedp71-WG"
