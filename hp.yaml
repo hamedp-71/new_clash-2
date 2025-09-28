@@ -1,41 +1,61 @@
 #====================================================#
-#     Clash Meta Configuration File (Final Version)    #
-#  Internal WG DNS removed & Load-Balance Group added  #
+#     Ultimate Clash Meta Profile (Problem Solved)     #
+#   Combines user proxies with advanced TUN/DNS config #
 #====================================================#
 
-# تنظیمات پایه کلش
-port: 7890
-socks-port: 7891
+mixed-port: 7890
+ipv6: true
 allow-lan: true
 mode: rule
-log-level: info
-external-controller: '0.0.0.0:9090'
-secret: ''
+log-level: warning
+external-controller: '127.0.0.1:9090'
+external-ui: ui
+profile:
+  store-selected: true
+  store-fake-ip: true
 
-# برای حداکثر سازگاری، IPv6 همچنان غیرفعال است
-ipv6: false
-
-# تنظیمات DNS مرکزی کلش
+# Advanced DNS settings with Fake IP and Hijacking
 dns:
   enable: true
-  listen: 0.0.0.0:53
-  enhanced-mode: redir-host
-  default-nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
+  listen: '0.0.0.0:1053'
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: '198.18.0.1/16'
   nameserver:
     - https://dns.google/dns-query
     - https://1.1.1.1/dns-query
   fallback:
     - https://dns.cloudflare.com/dns-query
-  fallback-filter:
-    geoip: true
-    geoip-code: IR
-    domain:
-      - +.ir
+  fake-ip-filter:
+    - '*'
+    - '+.lan'
+    - '+.local'
 
-# >> پراکسی‌ها <<
-# نکته مهم: کلید 'dns' از تمام کانفیگ‌های وایرگارد حذف شده است.
+# TUN mode for system-wide proxying
+tun:
+  enable: true
+  stack: gvisor
+  auto-route: true
+  strict-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - 'tcp://any:53'
+    - 'udp://any:53'
+  mtu: 1280
+
+# Sniffer for better traffic classification
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP: { ports: [80, 8080, 8880, 2052, 2082, 2086, 2095] }
+    TLS: { ports: [443, 8443, 2053, 2083, 2087, 2096] }
+    QUIC: { ports: [443, 8443] }
+
+# >> All of your proxies are listed below <<
+# IMPORTANT: Internal 'dns' key has been removed from all WireGuard configs.
 proxies:
   - name: "🇩🇪 anytls-443"
     type: anytls
@@ -598,13 +618,14 @@ proxies:
     public-key: "Nh5LEJT44xbuvTQnv3OZ0bXi09BFXV4SBB1XVMI12Ec="
     pre-shared-key: "N/gfMZSjvP8mbXfVP2hnD5CX8BkGvOyheJ67mCpD+QQ="
     mtu: 1280
-
-# >> گروه‌بندی پراکسی‌ها <<
+    
 proxy-groups:
-  - name: "PROXY"
+  - name: "PROXY 📲"
     type: select
     proxies:
-      - "⚖️ Load Balance"
+      - "Auto ⚡️"
+      - "Fallback 🔗"
+      - DIRECT
       - "🇩🇪 anytls-443"
       - "🇩🇪 hamedp71-WG"
       - "🇩🇪 hamedp71-WG 2"
@@ -663,12 +684,11 @@ proxy-groups:
       - "🇿🇦 South Africa 1"
       - "🇿🇦 South Africa"
 
-  # این گروه ترافیک را بین سرورهای سالم توزیع می‌کند
-  - name: "⚖️ Load Balance"
-    type: load-balance
-    url: http://www.gstatic.com/generate_204
-    interval: 300
-    strategy: consistent-hashing
+  - name: "Auto ⚡️"
+    type: url-test
+    url: "http://www.gstatic.com/generate_204"
+    interval: 120
+    tolerance: 50
     proxies:
       - "🇩🇪 anytls-443"
       - "🇩🇪 hamedp71-WG"
@@ -728,13 +748,85 @@ proxy-groups:
       - "🇿🇦 South Africa 1"
       - "🇿🇦 South Africa"
 
-# >> قوانین مسیریابی <<
+  - name: "Fallback 🔗"
+    type: fallback
+    url: "http://www.gstatic.com/generate_204"
+    interval: 120
+    proxies:
+      - "🇩🇪 anytls-443"
+      - "🇩🇪 hamedp71-WG"
+      - "🇩🇪 hamedp71-WG 2"
+      - "🇦🇹 Austria-WG"
+      - "🇦🇺 Australia-WG-1"
+      - "🇦🇺 Australia-WG-2"
+      - "🇦🇺 Australia-WG-3"
+      - "🇦🇺 Australia-WG-4"
+      - "🇦🇺 Australia-WG-5"
+      - "🇦🇺 Australia-WG"
+      - "🇦🇺 Australia-WG-6"
+      - "🇧🇦 Bosnia-WG"
+      - "🇨🇦 Canada-WG-1"
+      - "🇨🇦 Canada-WG-2"
+      - "🇨🇦 Canada-WG-3"
+      - "🇨🇦 Canada-WG-4"
+      - "🇨🇭 Switzerland-WG-1"
+      - "🇨🇾 Cyprus-WG"
+      - "🇨🇿 Czechia-WG"
+      - "🇨🇿 Czechia-WG-1"
+      - "🇫🇷 France-WG"
+      - "🇫🇷 France-WG-1"
+      - "🇬🇧 United Kingdom-WG"
+      - "🇭🇰 Hong Kong-WG"
+      - "🇮🇸 hamedp71-WG"
+      - "🇮🇸 Iceland-WG"
+      - "🇮🇸 Iceland-WG-1"
+      - "🇮🇸 Iceland-WG-2"
+      - "🇯🇵 Japan-WG"
+      - "🇰🇪 Kenya-WG"
+      - "🇱🇹 Lithuania-WG"
+      - "🇱🇺 Luxembourg-WG"
+      - "🇲🇰 North Macedonia-WG"
+      - "🇳🇱 Netherlands-WG-1"
+      - "🇳🇱 Netherlands-WG-2"
+      - "🇳🇴 Norway-WG"
+      - "🇳🇿 New Zealand-WG"
+      - "🇵🇦 Panama-WG"
+      - "🇷🇺 Russia-WG"
+      - "🇷🇺 Russia-WG-1"
+      - "🇷🇺 Russia-WG-2"
+      - "🇸🇪 Sweden-WG"
+      - "🇹🇼 Taiwan"
+      - "🇸🇬 Singapore"
+      - "🇸🇬 Singapore 1"
+      - "🇺🇸 United States 2"
+      - "🇺🇸 United States 3"
+      - "🇺🇸 United States 4"
+      - "🇺🇸 United States 5"
+      - "🇺🇸 United States 6"
+      - "🇺🇸 United States 7"
+      - "🇺🇸 United States 8"
+      - "🇺🇸 United States 9"
+      - "🇺🇸 United States"
+      - "🇻🇳 Vietnam"
+      - "🇿🇦 South Africa 1"
+      - "🇿🇦 South Africa"
+
+rule-providers:
+  ir:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/bootmortis/iran-clash-rules/main/rules/iran.txt"
+    path: ./ruleset/ir.txt
+    interval: 86400
+  ads:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/bootmortis/iran-clash-rules/main/rules/ads.txt"
+    path: ./ruleset/ads.txt
+    interval: 86400
+
 rules:
-  - DOMAIN-KEYWORD,ad,REJECT
-  - DOMAIN-KEYWORD,tracker,REJECT
-  - DOMAIN-SUFFIX,ir,DIRECT
+  - RULE-SET,ir,DIRECT
+  - RULE-SET,ads,REJECT
   - GEOIP,IR,DIRECT
-  - DOMAIN-KEYWORD,digikala,DIRECT
-  - DOMAIN-KEYWORD,snapp,DIRECT
-  - DOMAIN-KEYWORD,tapsi,DIRECT
-  - MATCH,PROXY
+  - MATCH,PROXY 📲
