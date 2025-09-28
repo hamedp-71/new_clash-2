@@ -1,6 +1,6 @@
 #====================================================#
 #     Clash Meta Configuration File (Final Version)    #
-#        All Proxies + DNS Fix for WireGuard           #
+#           IPv6 Disabled for Maximum Compatibility    #
 #====================================================#
 
 # تنظیمات پایه کلش
@@ -12,8 +12,11 @@ log-level: info
 external-controller: '0.0.0.0:9090'
 secret: ''
 
-# >> تنظیمات DNS <<
-# این بخش برای حل مشکل check-host.net با WireGuard اصلاح شده است.
+# <<<--- راه حل جدید و اصلی اینجاست
+# این دستور به طور کامل پشتیبانی از IPv6 را غیرفعال می‌کند تا از تداخل جلوگیری شود.
+ipv6: false
+
+# تنظیمات DNS
 dns:
   enable: true
   listen: 0.0.0.0:53
@@ -37,7 +40,6 @@ dns:
     'check-host.net': https://dns.google/dns-query
 
 # >> پراکسی‌ها <<
-# تمام پراکسی‌ها دقیقاً همانطور که ارائه دادید، اضافه شده‌اند.
 proxies:
   - name: "🇩🇪 anytls-443"
     type: anytls
@@ -659,73 +661,9 @@ proxies:
 
 # >> گروه‌بندی پراکسی‌ها <<
 proxy-groups:
+  # این گروه اصلی است که در قوانین استفاده می‌شود
   - name: "PROXY"
     type: select
-    proxies:
-      - "اتصال پایدار"
-      - "🇩🇪 anytls-443"
-      - "🇩🇪 hamedp71-WG"
-      - "🇩🇪 hamedp71-WG 2"
-      - "🇦🇹 Austria-WG"
-      - "🇦🇺 Australia-WG-1"
-      - "🇦🇺 Australia-WG-2"
-      - "🇦🇺 Australia-WG-3"
-      - "🇦🇺 Australia-WG-4"
-      - "🇦🇺 Australia-WG-5"
-      - "🇦🇺 Australia-WG"
-      - "🇦🇺 Australia-WG-6"
-      - "🇧🇦 Bosnia-WG"
-      - "🇨🇦 Canada-WG-1"
-      - "🇨🇦 Canada-WG-2"
-      - "🇨🇦 Canada-WG-3"
-      - "🇨🇦 Canada-WG-4"
-      - "🇨🇭 Switzerland-WG-1"
-      - "🇨🇾 Cyprus-WG"
-      - "🇨🇿 Czechia-WG"
-      - "🇨🇿 Czechia-WG-1"
-      - "🇫🇷 France-WG"
-      - "🇫🇷 France-WG-1"
-      - "🇬🇧 United Kingdom-WG"
-      - "🇭🇰 Hong Kong-WG"
-      - "🇮🇸 hamedp71-WG"
-      - "🇮🇸 Iceland-WG"
-      - "🇮🇸 Iceland-WG-1"
-      - "🇮🇸 Iceland-WG-2"
-      - "🇯🇵 Japan-WG"
-      - "🇰🇪 Kenya-WG"
-      - "🇱🇹 Lithuania-WG"
-      - "🇱🇺 Luxembourg-WG"
-      - "🇲🇰 North Macedonia-WG"
-      - "🇳🇱 Netherlands-WG-1"
-      - "🇳🇱 Netherlands-WG-2"
-      - "🇳🇴 Norway-WG"
-      - "🇳🇿 New Zealand-WG"
-      - "🇵🇦 Panama-WG"
-      - "🇷🇺 Russia-WG"
-      - "🇷🇺 Russia-WG-1"
-      - "🇷🇺 Russia-WG-2"
-      - "🇸🇪 Sweden-WG"
-      - "🇹🇼 Taiwan"
-      - "🇸🇬 Singapore"
-      - "🇸🇬 Singapore 1"
-      - "🇺🇸 United States 2"
-      - "🇺🇸 United States 3"
-      - "🇺🇸 United States 4"
-      - "🇺🇸 United States 5"
-      - "🇺🇸 United States 6"
-      - "🇺🇸 United States 7"
-      - "🇺🇸 United States 8"
-      - "🇺🇸 United States 9"
-      - "🇺🇸 United States"
-      - "🇻🇳 Vietnam"
-      - "🇿🇦 South Africa 1"
-      - "🇿🇦 South Africa"
-
-  - name: "اتصال پایدار"
-    type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 60 # تست پینگ هر ۶۰ ثانیه (یک دقیقه)
-    tolerance: 50
     proxies:
       - "🇩🇪 anytls-443"
       - "🇩🇪 hamedp71-WG"
