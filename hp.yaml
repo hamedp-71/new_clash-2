@@ -47,15 +47,13 @@ tun:
 proxies:
   # پراکسی اول از anytls به vless تغییر کرده تا برای کلش قابل فهم باشد
   - name: "🇩🇪 anytls-443"
-    type: vless
+    type: anytls
     server: 80.240.26.147
     port: 443
-    uuid: "qzJvszJHOB"
+    password: "qzJvszJHOB"
     tls: true
     sni: "suiany.makingirangreatagain.com"
     servername: "suiany.makingirangreatagain.com"
-    network: tcp
-    udp: true
 
   # DNS داخلی از تمام کانفیگ‌های وایرگارد زیر حذف شده است
   - name: "🇩🇪 hamedp71-WG"
