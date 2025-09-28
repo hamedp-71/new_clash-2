@@ -1,6 +1,7 @@
 #====================================================#
 #     Clash Meta Configuration File (Final Version)    #
 #        Proxies are included exactly as provided.     #
+#        Rule added for check-host.net fix.          #
 #====================================================#
 
 # تنظیمات پایه کلش
@@ -34,7 +35,6 @@ dns:
 
 # >> پراکسی‌ها <<
 # تمام پراکسی‌ها بدون هیچ تغییری در نام یا مشخصات اضافه شده‌اند.
-# نکته: پراکسی اول با نوع anytls ممکن است در کلش کار نکند. اگر کار نکرد، نوع آن را به vless تغییر دهید.
 proxies:
   - name: "🇩🇪 anytls-443"
     type: anytls
@@ -721,8 +721,8 @@ proxy-groups:
   - name: "اتصال پایدار"
     type: url-test
     url: http://www.gstatic.com/generate_204
-    interval: 60 # تست پینگ هر ۶۰ ثانیه (یک دقیقه)
-    tolerance: 50 # میزان تحمل تاخیر برای تعویض سرور
+    interval: 60
+    tolerance: 50
     proxies:
       - "🇩🇪 anytls-443"
       - "🇩🇪 hamedp71-WG"
@@ -791,6 +791,6 @@ rules:
   - DOMAIN-KEYWORD,digikala,DIRECT
   - DOMAIN-KEYWORD,snapp,DIRECT
   - DOMAIN-KEYWORD,tapsi,DIRECT
-  - DOMAIN-KEYWORD,sheypoor,DIRECT
-  - DOMAIN-KEYWORD,divar,DIRECT
+  # FIX: قانون اضافه شده برای حل مشکل سایت check-host.net
+  - DOMAIN-SUFFIX,check-host.net,PROXY
   - MATCH,PROXY
