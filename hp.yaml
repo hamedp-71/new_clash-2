@@ -52,6 +52,7 @@ proxies:
     port: 443
     uuid: "qzJvszJHOB"
     tls: true
+    sni: "suiany.makingirangreatagain.com"
     servername: "suiany.makingirangreatagain.com"
     network: tcp
     udp: true
